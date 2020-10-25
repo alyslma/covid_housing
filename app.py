@@ -11,7 +11,7 @@ os.chdir(os.path.dirname(os.path.abspath(__file__)))
 #################################################
 # Database Setup
 #################################################
-engine = create_engine("sqlite:///Resources/housingcovid.sqlite", connect_args={'check_same_thread': False})
+engine = create_engine("sqlite:///resources/housingcovid.sqlite", connect_args={'check_same_thread': False})
 # engine = create_engine("sqlite:///Resources/housingcovid.sqlite")
 
 # Reflect an existing database into a new model
