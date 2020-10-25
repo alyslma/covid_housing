@@ -1,6 +1,4 @@
 import os
-import numpy as np
-from datetime import datetime as dt, timedelta
 
 import sqlalchemy
 from sqlalchemy.ext.automap import automap_base
