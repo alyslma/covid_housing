@@ -12,7 +12,6 @@ os.chdir(os.path.dirname(os.path.abspath(__file__)))
 # Database Setup
 #################################################
 engine = create_engine("sqlite:///resources/housingcovid.sqlite", connect_args={'check_same_thread': False})
-# engine = create_engine("sqlite:///Resources/housingcovid.sqlite")
 
 # Reflect an existing database into a new model
 Base = automap_base()
@@ -89,24 +88,22 @@ def state_info(state):
     session = Session(engine)
 
     results = session.query(Change.state,
-                            Change.cases,
-                            Change.deaths,
                             func.avg(Change.change)
                             ).\
         filter(Change.state == state).\
         group_by(Change.state).all()
-    
+
+    add_results = session.query(CovidCounty.month,
+                                func.sum(CovidCounty.cases),
+                                func.sum(CovidCounty.deaths)).\
+        filter(CovidCounty.state == state).\
+        group_by(CovidCounty.month).\
+        order_by(CovidCounty.month.desc()).all()
+
     session.close()
 
-    # Create a dictionary from the row data and append to the list 'all_dates'
-    for state, sumCases, sumDeaths, avgHouseChange in results:
-        state_info_dict = {}
-        state_info_dict["State"] = state
-        state_info_dict["TotalCases"] = sumCases
-        state_info_dict["TotalDeaths"] = sumDeaths
-        state_info_dict["Change"] = avgHouseChange
-
-    return jsonify(state_info_dict)
+    state_info = list(zip(results, add_results))
+    return jsonify(state_info)
 
 @app.route("/api/statelist")
 def state_list():
@@ -157,7 +154,7 @@ def county_plot(state, county):
     
     session.close()
 
-    # Create a dictionary from the row data and append to the list 'all_dates'
+    # Create a dictionary from the row data and append to the list 'county_info'
     county_info = []
     for state, county, ruca, casePopAvg, houseChangeAvg in results:
         county_dict = {}
@@ -188,21 +185,8 @@ def state_covid(state):
 
     session.close()
 
-    # Create a dictionary from the row data and append to the list 'all_dates'
     all_covid_state = list(zip(results_values, results_cases_deaths))
     return jsonify(all_covid_state)
-
-    # for i in results_values:
-    #     covid_state = {}
-    #     covid_state["State"] = state
-    #     covid_state["Month"] = month
-    #     covid_state["AvgHousing"] = avgHousing
-    #     covid_state["TotalCases"] = totalCases
-    #     covid_state["TotalDeaths"] = totalDeaths
-
-    #     all_covid_state.append(covid_state)
-
-    # for month, totalCases, totalDeaths in results_cases_deaths:
     
 @app.route("/api/v3/<state>/<county>")
 def county_covid(state, county):
@@ -220,7 +204,7 @@ def county_covid(state, county):
     
     session.close()
 
-    # Create a dictionary from the row data and append to the list 'all_dates'
+    # Create a dictionary from the row data and append to the list 'all_covid_county'
     all_covid_county = []
     for state, county, month, totalCases, totalDeaths, avgHousing in results:
         covid_county = {}
