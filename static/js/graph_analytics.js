@@ -132,7 +132,7 @@ function plotAndInfo(state) {
                 tickformat: ".0%",
                 title: "% change in property value"
             },
-            title: `% change in property value vs. COVID cases per 1000 people in ${state}`,
+            title: `Percent change in property value vs. COVID cases per 1000 people in ${state} (Jan - Aug 2020)`,
             autosize: false,
             width: 900,
             height: 500,
