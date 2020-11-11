@@ -3,13 +3,13 @@
 To examine the impact of COVID on property values within the nation.
 
 ## Deployment
-Website deployed on [Heroku](https://housing-covid.herokuapp.com/)
+Website deployed on [Heroku](https://housing-covid.herokuapp.com/).
 
 ## Data Sources
-- Property value data from January to August 2020 from [Zillow](https://www.zillow.com/research/data/)
-- Number of COVID cases and deaths at the state and county level from [New York Times](https://github.com/nytimes/covid-19-data)
-- Census data to standardize COVID data per population from [Census.gov](https://www.census.gov/data.html)
-- Rural-Urban Commuting Area (RUCA) codes for classification purposes from [USDA ERS](https://www.ers.usda.gov/data-products/rural-urban-commuting-area-codes/)
+- Property value data from January to August 2020 from [Zillow](https://www.zillow.com/research/data/).
+- Number of COVID cases and deaths at the state and county level from [New York Times](https://github.com/nytimes/covid-19-data).
+- Census data to standardize COVID data per population from [Census.gov](https://www.census.gov/data.html).
+- Rural-Urban Commuting Area (RUCA) codes for classification purposes from [USDA ERS](https://www.ers.usda.gov/data-products/rural-urban-commuting-area-codes/).
 
 ## Visualizations
 - Percent change in property value vs. COVID cases per 1000 people (Jan - Aug 2020) for a state (selection made from a dropdown menu)
